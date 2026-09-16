@@ -21,7 +21,6 @@ class _RunMyAppState extends State<RunMyApp> {
     _loadThemeMode();
   }
 
-  // Special Feature 2: load saved theme on app start
   Future<void> _loadThemeMode() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString('themeMode');
@@ -66,54 +65,59 @@ class _RunMyAppState extends State<RunMyApp> {
       themeMode: _themeMode,
       home: Scaffold(
         appBar: AppBar(title: const Text('Status Card Demo')),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 45,
-                backgroundColor: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.teal
-                    : Colors.blueGrey,
-                child: const Icon(Icons.person, size: 42, color: Colors.white),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Flutter Theme Lab',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 400),
-                width: 220,
-                height: 64,
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
+        // Special Feature 4: whole screen cross-fades together
+        body: AnimatedTheme(
+          data: Theme.of(context),
+          duration: const Duration(milliseconds: 500),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 45,
+                  backgroundColor: Theme.of(context).brightness == Brightness.dark
                       ? Colors.teal
-                      : Colors.amber,
-                  borderRadius: BorderRadius.circular(16),
+                      : Colors.blueGrey,
+                  child: const Icon(Icons.person, size: 42, color: Colors.white),
                 ),
-                alignment: Alignment.center,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.circle, size: 12, color: Colors.black87),
-                    SizedBox(width: 8),
-                    Text('Status: Online', style: TextStyle(fontSize: 16, color: Colors.black)),
-                  ],
+                const SizedBox(height: 12),
+                const Text(
+                  'Flutter Theme Lab',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-              ),
-              const SizedBox(height: 10),
-              const Text('Choose the Theme:', style: TextStyle(fontSize: 16)),
-              const SizedBox(height: 10),
-              Switch(
-                value: _themeMode == ThemeMode.dark,
-                onChanged: (bool isDark) {
-                  changeTheme(isDark ? ThemeMode.dark : ThemeMode.light);
-                },
-              ),
-            ],
+                const SizedBox(height: 20),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  width: 220,
+                  height: 64,
+                  margin: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.teal
+                        : Colors.amber,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  alignment: Alignment.center,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.circle, size: 12, color: Colors.black87),
+                      SizedBox(width: 8),
+                      Text('Status: Online', style: TextStyle(fontSize: 16, color: Colors.black)),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text('Choose the Theme:', style: TextStyle(fontSize: 16)),
+                const SizedBox(height: 10),
+                Switch(
+                  value: _themeMode == ThemeMode.dark,
+                  onChanged: (bool isDark) {
+                    changeTheme(isDark ? ThemeMode.dark : ThemeMode.light);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
