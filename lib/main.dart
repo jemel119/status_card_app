@@ -37,6 +37,7 @@ class _RunMyAppState extends State<RunMyApp> {
           brightness: Brightness.dark,
         ),
       ),
+      themeMode: _themeMode,
       home: Scaffold(
         appBar: AppBar(title: const Text('Status Card Demo')),
         body: Center(
@@ -80,18 +81,12 @@ class _RunMyAppState extends State<RunMyApp> {
               const SizedBox(height: 10),
               const Text('Choose the Theme:', style: TextStyle(fontSize: 16)),
               const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () => changeTheme(ThemeMode.light),
-                    child: const Text('Light Theme'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => changeTheme(ThemeMode.dark),
-                    child: const Text('Dark Theme'),
-                  ),
-                ],
+              // Part 2 Task 2: Switch replaces the two buttons
+              Switch(
+                value: _themeMode == ThemeMode.dark,
+                onChanged: (bool isDark) {
+                  changeTheme(isDark ? ThemeMode.dark : ThemeMode.light);
+                },
               ),
             ],
           ),
