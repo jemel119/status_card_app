@@ -26,17 +26,17 @@ class _RunMyAppState extends State<RunMyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Status Card Demo',
       theme: ThemeData(
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-  scaffoldBackgroundColor: Colors.grey[200],
-),
-darkTheme: ThemeData(
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.deepPurple,
-    brightness: Brightness.dark,
-  ),
-),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: Colors.grey[200],
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+        ),
+      ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Status Card Demo')),
         body: Center(
@@ -56,7 +56,8 @@ darkTheme: ThemeData(
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-              Container(
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 400),
                 width: 220,
                 height: 64,
                 margin: const EdgeInsets.all(20),
