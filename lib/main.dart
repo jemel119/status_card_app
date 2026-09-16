@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const RunMyApp());
@@ -14,10 +15,35 @@ class RunMyApp extends StatefulWidget {
 class _RunMyAppState extends State<RunMyApp> {
   ThemeMode _themeMode = ThemeMode.system;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadThemeMode();
+  }
+
+  // Special Feature 2: load saved theme on app start
+  Future<void> _loadThemeMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString('themeMode');
+    setState(() {
+      _themeMode = switch (saved) {
+        'light' => ThemeMode.light,
+        'dark' => ThemeMode.dark,
+        _ => ThemeMode.system,
+      };
+    });
+  }
+
+  Future<void> _saveThemeMode(ThemeMode mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('themeMode', mode.name);
+  }
+
   void changeTheme(ThemeMode themeMode) {
     setState(() {
       _themeMode = themeMode;
     });
+    _saveThemeMode(themeMode);
   }
 
   @override
@@ -81,7 +107,6 @@ class _RunMyAppState extends State<RunMyApp> {
               const SizedBox(height: 10),
               const Text('Choose the Theme:', style: TextStyle(fontSize: 16)),
               const SizedBox(height: 10),
-              // Part 2 Task 2: Switch replaces the two buttons
               Switch(
                 value: _themeMode == ThemeMode.dark,
                 onChanged: (bool isDark) {
